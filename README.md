@@ -10,7 +10,7 @@ npm install
 npm start
 ```
 
-Visit [http://localhost:8000](http://localhost:8000/my-app);
+Visit [http://localhost:8000/my-app/](http://localhost:8000/my-app/)
 
 You should see an error caused by links rendered with different URLs between server and client.
 
