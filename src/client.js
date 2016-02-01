@@ -6,7 +6,7 @@ import routes from './routes.js';
 
 
 const browserHistory = useRouterHistory(useBasename(createHistory))({
-  basename: '/my-app/',
+  basename: '/my-app',
 });
 
 window.onload = () => {
