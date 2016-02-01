@@ -1,4 +1,4 @@
-This is a demo repo do show an issue with react-router server side rendering in situations when the app is using a basename url:
+This is a demo repo to show an issue with react-router server side rendering in situations when the app is using a basename url:
 
 # Running
 
