@@ -1,8 +1,7 @@
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { match, RouterContext, useRouterHistory } from 'react-router';
-import { useBasename, createMemoryHistory} from 'history';
+import { match, RouterContext } from 'react-router';
 import routes from '../routes';
 
 const app = express();
@@ -10,15 +9,10 @@ const app = express();
 app.use('/assets', express.static('build'));
 
 const render = (req, res) => {
-  const history = useRouterHistory(useBasename(createMemoryHistory))({
-    basename: '/my-app',
-  });
-
-  const location = history.createLocation(req.url);
-
+  const basename = '/my-app';
   // Note that req.url here should be the full URL path from
   // the original request, including the query string.
-  match({ routes, location }, (error, redirectLocation, renderProps) => {
+  match({ routes, location: req.url, basename }, (error, redirectLocation, renderProps) => {
     if (error) {
       res.status(500).send(error.message);
     } else if (redirectLocation) {
@@ -28,7 +22,7 @@ const render = (req, res) => {
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
       // res.status(200).send(renderProps);
-      const app = renderToString(
+      const content = renderToString(
         <RouterContext {...renderProps} />
       );
 
@@ -37,10 +31,11 @@ const render = (req, res) => {
         <html lang="en">
         <head>
           <title></title>
+          <base href="${basename}" />
           <script src="/assets/bundle.js"></script>
         </head>
         <body>
-          <div id="root">${app}</div>
+          <div id="root">${content}</div>
         </body>
         </html>
       `);

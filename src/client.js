@@ -1,17 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, useRouterHistory } from 'react-router';
-import { createHistory, useBasename } from 'history';
+import { Router, browserHistory } from 'react-router';
+import useBasename from 'history/lib/useBasename';
 import routes from './routes.js';
 
-
-const browserHistory = useRouterHistory(useBasename(createHistory))({
-  basename: '/my-app',
-});
+const history = useBasename(browserHistory)({ basename: '/my-app' });
 
 window.onload = () => {
   render((
-    <Router history={browserHistory}>
+    <Router history={history}>
       {routes}
     </Router>
   ), document.getElementById('root'));
